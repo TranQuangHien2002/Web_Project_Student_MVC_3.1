@@ -80,9 +80,9 @@ Student.remove = (id_student, result) => {
         result(null, res);
     });
 };
-//Phương thức getByUserId thực thi câu truy vấn SQL "SELECT * FROM student WHERE id = ?" để lấy tất cả các sinh viên của một người dùng dựa trên userId.
-Student.getByUserId = (userId, result) => {
-    sql.query("SELECT * FROM student WHERE id = ?", [userId], (err, res) => {
+//Phương thức getByRoomId thực thi câu truy vấn SQL "SELECT * FROM student WHERE id = ?" để lấy tất cả các sinh viên của một người dùng dựa trên roomId.
+Student.getByRoomId = (roomId, result) => {
+    sql.query("SELECT * FROM student WHERE id = ?", [roomId], (err, res) => {
         if (err) {
             console.log("error: ", err);
             result(null, err);
@@ -92,10 +92,10 @@ Student.getByUserId = (userId, result) => {
         result(null, res);
     });
 };
-//Phương thức createWithUserId thực thi câu truy vấn SQL "INSERT INTO student SET ?" để tạo một sinh viên mới cho một người dùng dựa trên userId. 
+//Phương thức createWithRoomId thực thi câu truy vấn SQL "INSERT INTO student SET ?" để tạo một sinh viên mới cho một người dùng dựa trên roomId. 
 //Đối số newStudent chứa thông tin của sinh viên cần tạo
-Student.createWithUserId = (newStudent, userId, result) => {
-    newStudent.ID = parseInt(userId);
+Student.createWithRoomId = (newStudent, roomId, result) => {
+    newStudent.ID = parseInt(roomId);
     sql.query("INSERT INTO student SET ?", newStudent, (err, res) => {
         if (err) {
             console.log("error: ", err);
@@ -107,4 +107,4 @@ Student.createWithUserId = (newStudent, userId, result) => {
         result(null, { id_student: res.insertId, ...newStudent });
     });
 };
-module.exports = Student; // Xuất lớp Student để có thể sử dụng ở các module khác.
+module.exports = Student; // Xuất lớp Student để có thể sử dụng ở các module khác.  

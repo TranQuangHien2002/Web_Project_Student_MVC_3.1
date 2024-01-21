@@ -53,19 +53,20 @@ exports.deleteStudent = (req, res) => {
         } else res.send({ message: `Student was deleted successfully!` });
     });
 };
+
 //Hàm này xử lý yêu cầu HTTP GET để lấy tất cả sinh viên của một người dùng. 
 //Nó lấy ID của người dùng từ tham số trong URL của yêu cầu HTTP,
-// sau đó gọi phương thức getByUserId của lớp Student để lấy sinh viên từ cơ sở dữ liệu
-exports.getByUserId = (req, res) => {
-    Student.getByUserId(req.params.userId, (err, data) => {
+// sau đó gọi phương thức getByRoomId của lớp Student để lấy sinh viên từ cơ sở dữ liệu
+exports.getByRoomId = (req, res) => {
+    Student.getByRoomId(req.params.roomId, (err, data) => {
         if (err) {
             if (err.kind === "not_found") {
                 res.status(404).send({
-                    message: `Not found Student with id ${req.params.userId}.`
+                    message: `Not found Student with id ${req.params.roomId}.`
                 });
             } else {
                 res.status(500).send({
-                    message: "Error retrieving Student with id " + req.params.userId
+                    message: "Error retrieving Student with id " + req.params.roomId
                 });
             }
         } else res.send(data);
@@ -74,17 +75,17 @@ exports.getByUserId = (req, res) => {
 
 //Hàm này xử lý yêu cầu HTTP POST để tạo một sinh viên mới cho một người dùng. 
 //Nó tạo một đối tượng Student mới từ dữ liệu trong body của yêu cầu HTTP, 
-//sau đó gọi phương thức createWithUserId của lớp Student để thêm sinh viên mới vào cơ sở dữ liệu.
-exports.createStudentWithUserId = (req, res) => {
+//sau đó gọi phương thức createWithRoomId của lớp Student để thêm sinh viên mới vào cơ sở dữ liệu.
+exports.createStudentWithRoomId = (req, res) => {
     const student = new Student({
         name: req.body.name,
         email: req.body.email,
         classname: req.body.classname,
     });
 
-    Student.createWithUserId(student, req.params.userId, (err, data) => {
+    Student.createWithRoomId(student, req.params.roomId, (err, data) => {
         if (err) res.status(500).send({ message: err.message || "Some error occurred while creating the Student." });
         else res.send(data);
     });
 };
-module.exports = exports; //Xuất các hàm xử lý yêu cầu HTTP để có thể sử dụng ở các module khác.
+module.exports = exports; //Xuất các hàm xử lý yêu cầu HTTP để có thể sử dụng ở các module khác. 
